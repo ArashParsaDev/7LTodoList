@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:padding="12dp"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ویرایش وظیفه"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        />
+
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:hint="عنوان"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+      android:layout_marginTop="12dp"
+      android:id="@+id/etl_editDialog_taskName_error"
+      >
+      <com.google.android.material.textfield.TextInputEditText
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:id="@+id/et_editDialog_taskName"
+          />
+  </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_editDialog_save"
+        android:text="ذخیره"
+        android:background="@color/design_default_color_secondary"
+        android:layout_marginTop="8dp"
+        />
+</LinearLayout>

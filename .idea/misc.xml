@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.3646153846153846" />
+        <entry key="app/src/main/res/drawable/bg_gradient.xml" value="0.36564102564102563" />
+        <entry key="app/src/main/res/drawable/ic_baseline_delete_sweep_24.xml" value="0.36564102564102563" />
+        <entry key="app/src/main/res/drawable/shape_bg_et.xml" value="0.36564102564102563" />
+        <entry key="app/src/main/res/drawable/shape_bg_item.xml" value="0.36564102564102563" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35520833333333335" />
+        <entry key="app/src/main/res/layout/add_dialog_task.xml" value="0.35520833333333335" />
+        <entry key="app/src/main/res/layout/addd_dialog_task.xml" value="0.35520833333333335" />
+        <entry key="app/src/main/res/layout/dialog_task.xml" value="0.35520833333333335" />
+        <entry key="app/src/main/res/layout/edit_dialog_task.xml" value="0.35520833333333335" />
+        <entry key="app/src/main/res/layout/item_task.xml" value="0.33" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

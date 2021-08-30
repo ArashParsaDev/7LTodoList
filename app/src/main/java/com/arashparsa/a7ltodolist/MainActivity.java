@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
@@ -25,16 +27,30 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.Add
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.etMain.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(charSequence.length() > 0){
+                    List<Task> tasks = sqLiteOpenHelper.searchTask(charSequence.toString());
+                    taskAdapter.searchTasks(tasks);
+                }else {
+                    List<Task> tasks = sqLiteOpenHelper.getTasks();
+                    taskAdapter.searchTasks(tasks);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         binding.rvMainTask.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        /*taskList.add(new Task(1,"arash",true));
-        taskList.add(new Task(2,"arash",true));
-        taskList.add(new Task(3,"arash",true));
-        taskList.add(new Task(4,"arash",true));
-        taskList.add(new Task(5,"arash",true));
-        taskList.add(new Task(6,"arash",true));
-
-*/
         sqLiteOpenHelper = new SQLiteOpenHelper(this);
         taskAdapter = new TaskAdapter(this);
         List<Task> tasks = sqLiteOpenHelper.getTasks();
@@ -56,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.Add
 
 
 
-
+        //add task manually to DB
        /* Task task = new Task();
         task.setNameTask("hasan");
         task.setCompleted(true);
@@ -98,6 +114,12 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.Add
         bundle.putParcelable("task", task);
         editTaskDialog.setArguments(bundle);
         editTaskDialog.show(getSupportFragmentManager(),null);
+    }
+
+    @Override
+    public void onItemCheckedChange(Task task) {
+        sqLiteOpenHelper.updateTask(task);
+
     }
 
     @Override

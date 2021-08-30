@@ -76,8 +76,23 @@ public class SQLiteOpenHelper extends android.database.sqlite.SQLiteOpenHelper {
         return taskList;
     }
 
-    public void searchTask(String query) {
-
+    public List<Task> searchTask(String query) {
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM "+TABLE_TASKS+" WHERE nameTask LIKE '%" +query + "%'",null);
+        List<Task> taskList = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            //this is just add of one task
+            do {
+                Task task = new Task();
+                task.setId(cursor.getLong(0));
+                task.setNameTask(cursor.getString(1));
+                task.setCompleted(cursor.getInt(2) == 1);
+                taskList.add(task);
+            } while (cursor.moveToNext());
+            //do while until we have a row
+        }
+        sqLiteDatabase.close();
+        return taskList;
     }
 
 

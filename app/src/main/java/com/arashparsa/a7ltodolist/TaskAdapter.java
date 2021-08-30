@@ -1,6 +1,8 @@
 package com.arashparsa.a7ltodolist;
 
 import android.content.Context;
+import android.text.SpannableString;
+import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +79,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                     task.setCompleted(isChecked);
                     eventListener.onItemCheckedChange(task);
+                    if(isChecked == true){
+                        SpannableString spannableString = new SpannableString(task.getNameTask());
+                        spannableString.setSpan(new StrikethroughSpan(),0,task.getNameTask().length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        checkBoxTask.setText(spannableString);
+                    }else
+                        checkBoxTask.setText(task.getNameTask());
                 }
             });
         }

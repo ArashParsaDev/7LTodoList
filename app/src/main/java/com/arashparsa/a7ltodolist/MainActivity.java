@@ -19,13 +19,16 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.Add
     ActivityMainBinding binding;
     TaskAdapter taskAdapter;
 
-    private SQLiteOpenHelper sqLiteOpenHelper;
+    //private SQLiteOpenHelper sqLiteOpenHelper;
+    private TaskDao taskDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        taskDao = AppDatabase.getAppDatabase(this).getTaskDao();
 
         binding.etMain.addTextChangedListener(new TextWatcher() {
             @Override
@@ -36,10 +39,12 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.Add
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(charSequence.length() > 0){
-                    List<Task> tasks = sqLiteOpenHelper.searchTask(charSequence.toString());
+                   // List<Task> tasks = sqLiteOpenHelper.searchTask(charSequence.toString());
+                    List<Task> tasks = taskDao.search(charSequence.toString());
                     taskAdapter.searchTasks(tasks);
                 }else {
-                    List<Task> tasks = sqLiteOpenHelper.getTasks();
+                    //List<Task> tasks = sqLiteOpenHelper.getTasks();
+                    List<Task> tasks = taskDao.getAll();
                     taskAdapter.searchTasks(tasks);
                 }
             }
@@ -51,9 +56,10 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.Add
         });
 
         binding.rvMainTask.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        sqLiteOpenHelper = new SQLiteOpenHelper(this);
+       // sqLiteOpenHelper = new SQLiteOpenHelper(this);
         taskAdapter = new TaskAdapter(this);
-        List<Task> tasks = sqLiteOpenHelper.getTasks();
+       // List<Task> tasks = sqLiteOpenHelper.getTasks();
+        List<Task> tasks = taskDao.getAll();
         taskAdapter.addItems(tasks);
 
         binding.rvMainTask.setAdapter(taskAdapter);
@@ -61,16 +67,11 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.Add
         binding.ivDeleteAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sqLiteOpenHelper.deleteTasks();
+                //sqLiteOpenHelper.deleteTasks();
+                taskDao.deleteAll();
                 taskAdapter.clearItems();
             }
         });
-
-
-
-
-
-
 
         //add task manually to DB
        /* Task task = new Task();
@@ -90,7 +91,8 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.Add
 
     @Override
     public void onNewTask(Task task) {
-        long result = sqLiteOpenHelper.addTask(task);
+       // long result = sqLiteOpenHelper.addTask(task);
+        long result = taskDao.add(task);
         if (result > -1) {
             task.setId(result);
             taskAdapter.addItem(task);
@@ -101,7 +103,8 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.Add
 
     @Override
     public void onDeleteButtonClick(Task task) {
-        int result = sqLiteOpenHelper.deleteTask(task);
+       // int result = sqLiteOpenHelper.deleteTask(task);
+        int result = taskDao.delete(task);
         if (result > 0) {
             taskAdapter.deleteItem(task);
         }
@@ -118,13 +121,15 @@ public class MainActivity extends AppCompatActivity implements AddTaskDialog.Add
 
     @Override
     public void onItemCheckedChange(Task task) {
-        sqLiteOpenHelper.updateTask(task);
+        //sqLiteOpenHelper.updateTask(task);
+        taskDao.update(task);
 
     }
 
     @Override
     public void onEditTask(Task task) {
-        int result = sqLiteOpenHelper.updateTask(task);
+        //int result = sqLiteOpenHelper.updateTask(task);
+        int result = taskDao.update(task);
         if (result > 0) {
             taskAdapter.updateItem(task);
         }
